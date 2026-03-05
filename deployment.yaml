@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ankush-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ankush-app
+  template:
+    metadata:
+      labels:
+        app: ankush-app
+    spec:
+      containers:
+      - name: ankush-container
+        image: ankushbx/ankush-devops-app:1.0
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ankush-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: ankush-app
+  ports:
+    - port: 80
+      targetPort: 3000
